@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Birthday Gift 🌹</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            background: #0a0005; color: #fff;
+            font-family: 'Poppins', 'Noto Sans Bengali', sans-serif;
+            touch-action: none;
+        }
+        #canvas3d {
+            position: fixed; inset: 0; width: 100%; height: 100%;
+            z-index: 1; display: block; touch-action: none; cursor: grab;
+        }
+        #canvas3d:active { cursor: grabbing; }
+        .top-btn {
+            position: fixed; top: 16px; z-index: 100000;
+            background: rgba(255, 77, 109, 0.3); border: 1px solid #ff4d6d;
+            color: #fff; padding: 8px 16px; border-radius: 20px; cursor: pointer;
+            font-weight: 600; font-size: 13px; font-family: inherit;
+            backdrop-filter: blur(8px); pointer-events: auto;
+        }
+        .top-btn:hover { background: #ff4d6d; }
+        #lang-btn { right: 14px; }
+        #back-btn { left: 14px; display: none; }
+        .screen {
+            position: fixed; inset: 0; z-index: 10;
+            display: none; opacity: 0; transition: opacity 0.5s ease;
+        }
+        .screen.active {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; opacity: 1;
+        }
+        #screen1.active, #screen2.active { pointer-events: none; }
+        #screen1 .ui-btn, #screen2 .ui-btn, #screen1 .hint, #screen2 .hint { pointer-events: auto; }
+        #screen3.active, #screen4.active {
+            pointer-events: auto;
+            background: radial-gradient(circle at center, rgba(43,10,22,0.95) 0%, rgba(10,0,5,0.98) 100%);
+        }
+        .hint {
+            position: absolute; top: 65px; left: 50%; transform: translateX(-50%);
+            background: rgba(255,77,109,0.2); border: 1px solid rgba(255,77,109,0.4);
+            color: #ffb3c6; padding: 6px 14px; border-radius: 18px;
+            font-size: 12px; white-space: nowrap; z-index: 20; backdrop-filter: blur(6px);
+        }
+        .ui-btn {
+            position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(45deg, #ff4d6d, #c9184a); border: none; color: #fff;
+            padding: 12px 28px; font-size: 16px; border-radius: 30px; cursor: pointer;
+            box-shadow: 0 4px 18px rgba(255, 77, 109, 0.6); font-family: inherit;
+            z-index: 20; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255,77,109,0.5); transform: translateX(-50%) scale(1); }
+            50% { box-shadow: 0 0 24px rgba(255,77,109,0.9); transform: translateX(-50%) scale(1.04); }
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 77, 109, 0.3);
+            border-radius: 24px; padding: 28px 18px 24px; text-align: center;
+            backdrop-filter: blur(16px); width: 88%; max-width: 380px; min-height: 420px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.6); position: relative;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .photo {
+            width: 170px; height: 170px; object-fit: contain; margin-bottom: 16px;
+            filter: drop-shadow(0 8px 16px rgba(255,77,109,0.4)); border-radius: 16px;
+        }
+        .question-text {
+            font-size: 18px; line-height: 1.55; margin-bottom: 22px;
+            color: #ffb3c6; font-weight: 600;
+        }
+        .btn-container { display: flex; justify-content: center; gap: 18px; align-items: center; width: 100%; }
+        .btn {
+            width: 95px; height: 42px; font-size: 17px; border: none; border-radius: 25px;
+            cursor: pointer; font-weight: bold; font-family: inherit;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .btn-yes { background: #ff4d6d; color: #fff; box-shadow: 0 4px 15px rgba(255,77,109,0.5); }
+        .no-placeholder { width: 95px; height: 42px; }
+        .btn-no {
+            background: #fff; color: #ff4d6d; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 99; transition: left 0.18s ease, top 0.18s ease;
+        }
+    </style>
+</head>
+<body>
+    <button id="lang-btn" class="top-btn" onclick="toggleLanguage()">বাং / EN</button>
+    <button id="back-btn" class="top-btn" onclick="goBack()">⬅️ Back</button>
+    <canvas id="canvas3d"></canvas>
+
+    <div id="screen1" class="screen active">
+        <div class="hint" id="hint1">👆 Drag to rotate 3D model</div>
+        <button class="ui-btn" onclick="goToScreen(2)" id="t-next1">Go to Next Step ➡️</button>
+    </div>
+    <div id="screen2" class="screen">
+        <div class="hint" id="hint2">Drag rotate · Pinch zoom · Move around 3D</div>
+        <button class="ui-btn" onclick="goToScreen(3)" id="t-next2">Continue ➡️</button>
+    </div>
+    <div id="screen3" class="screen">
+        <div class="card" id="main-card">
+            <img class="photo" id="img3" alt="Image 1" src="" onerror="this.onerror=null;this.src='https://media.tenor.com/J3Z-oV4s_o0AAAAi/mochi-peach-cat.gif';">
+            <div class="question-text" id="t-question"></div>
+            <div class="btn-container">
+                <button class="btn btn-yes" onclick="goToScreen(4)" id="t-yes">Yes</button>
+                <div class="no-placeholder"><button class="btn btn-no" id="btn-no">No</button></div>
+            </div>
+        </div>
+    </div>
+    <div id="screen4" class="screen">
+        <div class="card">
+            <img class="photo" id="img4" alt="Image 2" src="" onerror="this.onerror=null;this.src='https://media.tenor.com/ZSp7h0k0q1MAAAAi/mochi-peach.gif';">
+            <div class="question-text" id="t-success" style="font-size:20px;"></div>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+        import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+
+        const qs = new URLSearchParams(location.search);
+        const GIFT = {
+            name: decodeURIComponent(qs.get('name') || 'Mariya').slice(0, 24),
+            happy: decodeURIComponent(qs.get('happy') || 'Happy').slice(0, 24),
+            bday: decodeURIComponent(qs.get('bday') || '17th Birthday').slice(0, 28),
+            cloud: decodeURIComponent(qs.get('cloud') || ('Happy Birthday ' + (qs.get('name') ? decodeURIComponent(qs.get('name')) : 'Mariya'))).slice(0, 40),
+            img1: decodeURIComponent(qs.get('img1') || 'https://i.ibb.co/pvPVC5dV/image.png'),
+            img2: decodeURIComponent(qs.get('img2') || 'https://i.ibb.co/ymwLH6r0/image.png'),
+            question: decodeURIComponent(qs.get('q') || 'I want to have you in a halal way,<br>do you agree...? 🌹'),
+            success: decodeURIComponent(qs.get('s') || 'Then send me a message right now and let me know! ❤️'),
+            qbn: decodeURIComponent(qs.get('qbn') || 'আমি তোমাকে হালাল ভাবে পেতে চাই,<br>তুমি কি রাজী...? 🌹'),
+            sbn: decodeURIComponent(qs.get('sbn') || 'তাহলে তুমি আমাকে মেসেজ দিয়ে এখনই জানিয়ে দাও! ❤️'),
+            cloudbn: decodeURIComponent(qs.get('cloudbn') || ('শুভ জন্মদিন ' + (qs.get('name') ? decodeURIComponent(qs.get('name')) : 'Mariya')))
+        };
+
+        document.title = GIFT.name + ' 🌹';
+        document.getElementById('img3').src = GIFT.img1;
+        document.getElementById('img4').src = GIFT.img2;
+        document.getElementById('t-question').innerHTML = GIFT.question;
+        document.getElementById('t-success').innerHTML = GIFT.success;
+
+        window.__GIFT__ = GIFT;
+
+        const canvas = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x0a0005, 0.012);
+        const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 500);
+        camera.position.set(0, 0.5, 16);
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+        renderer.setClearColor(0x0a0005, 1);
+
+        const controls = new OrbitControls(camera, canvas);
+        controls.enableDamping = true; controls.dampingFactor = 0.08;
+        controls.screenSpacePanning = true; controls.minDistance = 3; controls.maxDistance = 60;
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+        const pinkLight = new THREE.PointLight(0xff4d6d, 3, 90);
+        pinkLight.position.set(6, 6, 8); scene.add(pinkLight);
+        scene.add(new THREE.PointLight(0xffd700, 2, 90)).position.set(-6, -2, 6);
+
+        const starGeo = new THREE.BufferGeometry();
+        const starPos = new Float32Array(2500 * 3);
+        for (let i = 0; i < starPos.length; i++) starPos[i] = (Math.random() - 0.5) * 130;
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ size: 0.08, color: 0xffb3c6, transparent: true, opacity: 0.8 })));
+
+        const introGroup = new THREE.Group(); scene.add(introGroup);
+        let introFalling = true; introGroup.position.y = 15;
+        const cloudGroup = new THREE.Group(); cloudGroup.visible = false; scene.add(cloudGroup);
+        const fallingSprites = [];
+
+        function makeTextSprite(text, color) {
+            const c = document.createElement('canvas'); c.width = 512; c.height = 128;
+            const ctx = c.getContext('2d');
+            ctx.font = 'bold 36px "Noto Sans Bengali","Poppins",sans-serif';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.shadowColor = color; ctx.shadowBlur = 16; ctx.fillStyle = color; ctx.fillText(text, 256, 64);
+            ctx.shadowBlur = 4; ctx.fillStyle = '#ffffff'; ctx.fillText(text, 256, 64);
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true }));
+            sprite.scale.set(4, 1, 1); return sprite;
+        }
+        function makeHeartSprite() {
+            const c = document.createElement('canvas'); c.width = 128; c.height = 128;
+            const ctx = c.getContext('2d');
+            ctx.shadowColor = '#ff0040'; ctx.shadowBlur = 18; ctx.fillStyle = '#ff2a4a';
+            ctx.beginPath(); ctx.moveTo(64, 108);
+            ctx.bezierCurveTo(12,70,8,28,40,20); ctx.bezierCurveTo(54,16,64,30,64,40);
+            ctx.bezierCurveTo(64,30,74,16,88,20); ctx.bezierCurveTo(120,28,116,70,64,108); ctx.fill();
+            const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true }));
+            sprite.scale.set(0.6, 0.6, 1); return sprite;
+        }
+        function resetCloudSprite(sprite, randomY) {
+            sprite.position.x = (Math.random() - 0.5) * 26;
+            sprite.position.z = (Math.random() - 0.5) * 20;
+            sprite.position.y = randomY ? (Math.random() * 26 - 6) : (12 + Math.random() * 8);
+            sprite.userData.baseX = sprite.position.x;
+        }
+        function buildCloudSprites(textStr) {
+            while (cloudGroup.children.length) { const ch = cloudGroup.children.pop(); if(ch.material&&ch.material.map) ch.material.map.dispose(); }
+            fallingSprites.length = 0;
+            const colors = ['#ffb3c6','#ffd700','#ff6b9d','#ffffff','#ff9ebb'];
+            for (let i = 0; i < 35; i++) { const s = makeTextSprite(textStr, colors[i%colors.length]); resetCloudSprite(s, true); cloudGroup.add(s); fallingSprites.push({sprite:s,speed:0.03+Math.random()*0.05,sway:Math.random()*Math.PI*2}); }
+            for (let i = 0; i < 20; i++) { const h = makeHeartSprite(); resetCloudSprite(h, true); cloudGroup.add(h); fallingSprites.push({sprite:h,speed:0.035+Math.random()*0.06,sway:Math.random()*Math.PI*2}); }
+        }
+        function fitText(font, str, maxWidth, baseSize) {
+            let size = baseSize;
+            let geo = new TextGeometry(str, {font,size,height:0.22,curveSegments:8,bevelEnabled:true,bevelThickness:0.03,bevelSize:0.015});
+            geo.computeBoundingBox();
+            let w = geo.boundingBox.max.x - geo.boundingBox.min.x;
+            if (w > maxWidth) { size = baseSize*(maxWidth/w); geo.dispose(); geo = new TextGeometry(str, {font,size,height:0.22,curveSegments:8,bevelEnabled:true,bevelThickness:0.03,bevelSize:0.015}); }
+            geo.center(); return geo;
+        }
+
+        new FontLoader().load('https://threejs.org/examples/fonts/helvetiker_bold.typeface.json', (font) => {
+            const m1 = new THREE.Mesh(fitText(font, GIFT.happy, 10, 0.9), new THREE.MeshStandardMaterial({color:0xffb3c6,metalness:0.4,roughness:0.2,emissive:0xff4d6d,emissiveIntensity:0.25}));
+            m1.position.y = 1.6; introGroup.add(m1);
+            const m2 = new THREE.Mesh(fitText(font, GIFT.bday, 11, 0.75), new THREE.MeshStandardMaterial({color:0xffd700,metalness:0.5,roughness:0.2,emissive:0xaa8800,emissiveIntensity:0.15}));
+            m2.position.y = 0.2; introGroup.add(m2);
+            const m3 = new THREE.Mesh(fitText(font, GIFT.name, 10, 1.15), new THREE.MeshStandardMaterial({color:0x6b9dff,metalness:0.4,roughness:0.2,emissive:0x3366cc,emissiveIntensity:0.2}));
+            m3.position.y = -1.3; introGroup.add(m3);
+            buildCloudSprites(GIFT.cloud);
+        });
+
+        window.rebuildCloudSprites = (text) => buildCloudSprites(text || GIFT.cloud);
+
+        window.__set3DScreen = (num) => {
+            canvas.style.pointerEvents = (num===1||num===2)?'auto':'none';
+            canvas.style.visibility = (num===3||num===4)?'hidden':'visible';
+            if(num===1){introGroup.visible=true;cloudGroup.visible=false;controls.enabled=true;controls.autoRotate=true;controls.autoRotateSpeed=1.2;camera.position.set(0,0.5,16);controls.target.set(0,0,0);}
+            else if(num===2){introGroup.visible=false;cloudGroup.visible=true;controls.enabled=true;controls.autoRotate=true;controls.autoRotateSpeed=0.6;camera.position.set(0,0,15);controls.target.set(0,0,0);}
+            else{introGroup.visible=false;cloudGroup.visible=false;controls.enabled=false;}
+            controls.update();
+        };
+
+        const clock = new THREE.Clock();
+        const starsRef = scene.children.find(c => c instanceof THREE.Points);
+        function animate() {
+            requestAnimationFrame(animate);
+            const t = clock.getElapsedTime();
+            if(starsRef) starsRef.rotation.y = t * 0.015;
+            if(introGroup.visible){if(introFalling){introGroup.position.y-=0.12;if(introGroup.position.y<=0){introFalling=false;introGroup.position.y=0;}}else introGroup.position.y=Math.sin(t*1.2)*0.2;}
+            if(cloudGroup.visible){for(let i=0;i<fallingSprites.length;i++){const item=fallingSprites[i];item.sprite.position.y-=item.speed;item.sprite.position.x=item.sprite.userData.baseX+Math.sin(t*1.2+item.sway)*0.8;if(item.sprite.position.y<-12)resetCloudSprite(item.sprite,false);}}
+            controls.update(); renderer.render(scene, camera);
+        }
+        animate();
+        window.addEventListener('resize', () => { camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+        window.__set3DScreen(1);
+    </script>
+
+    <script>
+        window.currentScreen = 1;
+        const GIFT = window.__GIFT__;
+
+        function goToScreen(num) {
+            window.currentScreen = num;
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + num).classList.add('active');
+            document.getElementById('back-btn').style.display = num > 1 ? 'block' : 'none';
+            if (window.__set3DScreen) window.__set3DScreen(num);
+        }
+        function goBack() { if (window.currentScreen > 1) goToScreen(window.currentScreen - 1); }
+
+        const noBtn = document.getElementById('btn-no');
+        const card = document.getElementById('main-card');
+        function moveNoBtn() {
+            noBtn.style.position = 'absolute';
+            const pad=12, bw=noBtn.offsetWidth||95, bh=noBtn.offsetHeight||42;
+            const maxX=Math.max(pad,card.clientWidth-bw-pad), maxY=Math.max(pad,card.clientHeight-bh-pad);
+            noBtn.style.left=(Math.floor(Math.random()*(maxX-pad+1))+pad)+'px';
+            noBtn.style.top=(Math.floor(Math.random()*(maxY-pad+1))+pad)+'px';
+        }
+        noBtn.addEventListener('mouseover', moveNoBtn);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoBtn(); }, { passive: false });
+        noBtn.addEventListener('click', moveNoBtn);
+
+        let currentLang = 'en';
+        const giftName = () => GIFT ? GIFT.name : 'Mariya';
+        const texts = {
+            bn: {
+                back:'⬅️ পিছনে', next1:'পরবর্তী ধাপ ➡️', next2:'এগিয়ে যাও ➡️',
+                hint1:'👆 টেনে ঘোরাও · 3D', hint2:'টেনে ঘোরাও · চিমটি জুম',
+                cloudText:()=> GIFT ? GIFT.cloudbn : 'শুভ জন্মদিন',
+                question: GIFT ? GIFT.qbn : 'আমি তোমাকে হালাল ভাবে পেতে চাই,<br>তুমি কি রাজী...? 🌹',
+                yes:'হ্যাঁ', no:'না',
+                success: GIFT ? GIFT.sbn : 'তাহলে তুমি আমাকে মেসেজ দিয়ে এখনই জানিয়ে দাও! ❤️',
+                btnText:'EN / বাং'
+            },
+            en: {
+                back:'⬅️ Back', next1:'Go to Next Step ➡️', next2:'Continue ➡️',
+                hint1:'👆 Drag to rotate 3D model', hint2:'Drag rotate · Pinch zoom · Move',
+                cloudText:()=> GIFT ? GIFT.cloud : 'Happy Birthday',
+                question: GIFT ? GIFT.question : 'I want to have you in a halal way,<br>do you agree...? 🌹',
+                yes:'Yes', no:'No',
+                success: GIFT ? GIFT.success : 'Then send me a message right now and let me know! ❤️',
+                btnText:'বাং / EN'
+            }
+        };
+        function toggleLanguage() {
+            currentLang = currentLang==='en'?'bn':'en';
+            const t = texts[currentLang];
+            document.getElementById('back-btn').innerHTML = t.back;
+            document.getElementById('t-next1').innerHTML = t.next1;
+            document.getElementById('t-next2').innerHTML = t.next2;
+            document.getElementById('hint1').innerHTML = t.hint1;
+            document.getElementById('hint2').innerHTML = t.hint2;
+            document.getElementById('t-question').innerHTML = t.question;
+            document.getElementById('t-yes').innerHTML = t.yes;
+            document.getElementById('btn-no').innerHTML = t.no;
+            document.getElementById('t-success').innerHTML = t.success;
+            document.getElementById('lang-btn').innerHTML = t.btnText;
+            if (window.rebuildCloudSprites) window.rebuildCloudSprites(t.cloudText());
+        }
+    </script>
+</body>
+</html>
