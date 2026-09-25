@@ -11,97 +11,64 @@
         .bg-fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
         .bg-fx span{position:absolute;font-size:20px;animation:fh 9s infinite;opacity:.12}
         @keyframes fh{0%{transform:translateY(100vh) rotate(0);opacity:0}10%{opacity:.12}90%{opacity:.12}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
-
         .wrap{max-width:960px;margin:0 auto;padding:15px;position:relative;z-index:1}
-
-        /* Header */
         .hdr{text-align:center;padding:20px 0 15px}
         .hdr h1{font-size:26px;color:#ff4d6d;text-shadow:0 0 20px rgba(255,77,109,.5)}
         .hdr p{color:#ff85a1;font-size:13px;margin-top:5px}
-
-        /* Tabs */
         .tabs{display:flex;justify-content:center;gap:6px;margin:15px 0;flex-wrap:wrap}
         .tab{padding:8px 18px;border-radius:20px;border:1px solid rgba(255,77,109,.3);background:rgba(255,77,109,.08);color:#ff85a1;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:.2s}
         .tab.active{background:#ff4d6d;color:#fff;border-color:#ff4d6d;box-shadow:0 0 12px rgba(255,77,109,.5)}
-
-        /* Sections */
         .sec{display:none;animation:fadeIn .4s}
         .sec.active{display:block}
         @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-        /* Card */
         .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,77,109,.2);border-radius:16px;padding:20px;margin-bottom:16px;backdrop-filter:blur(8px)}
         .card-t{font-size:15px;color:#ff4d6d;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px}
         .card-t span{font-size:18px}
-
-        /* Form */
         .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
         @media(max-width:640px){.row{grid-template-columns:1fr}}
         .fg{margin-bottom:12px}
-        .fg.full{grid-column:1/-1}
         label{display:block;font-size:11px;color:#ff85a1;margin-bottom:4px;font-weight:600}
         label .ht{color:#776;font-weight:400;font-size:10px}
         input,textarea{width:100%;padding:10px 12px;background:rgba(0,0,0,.6);border:1px solid rgba(255,77,109,.3);border-radius:9px;color:#fff;font-size:13px;font-family:inherit;outline:none;transition:.3s}
         input:focus,textarea:focus{border-color:#ff4d6d;box-shadow:0 0 10px rgba(255,77,109,.3)}
         textarea{resize:vertical;min-height:50px}
-        input::placeholder,textarea::placeholder{color:#553344}
-
-        /* Image preview */
         .ip-row{display:flex;gap:8px;margin-top:6px;align-items:center}
         .ip-img{width:44px;height:44px;border-radius:7px;border:1px solid rgba(255,77,109,.3);object-fit:cover;background:#111}
         .ip-st{font-size:10px;color:#888}
         .ip-st.ok{color:#0c6}
         .ip-st.fail{color:#f44}
-
-        /* Tip */
         .tip{background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.2);border-radius:9px;padding:8px 12px;font-size:11px;color:#ffd700;margin-top:8px}
         .tip a{color:#ff85a1}
-
-        /* Netlify Setup */
         .nl-box{background:rgba(0,200,150,.06);border:1px solid rgba(0,200,150,.25);border-radius:12px;padding:16px;margin-bottom:14px}
         .nl-box h3{color:#00c896;font-size:14px;margin-bottom:10px}
         .nl-steps{font-size:12px;color:#aaa;line-height:1.8}
         .nl-steps b{color:#00c896}
         .nl-steps a{color:#ff85a1;text-decoration:underline}
-
-        /* Buttons */
         .btns{display:flex;gap:10px;justify-content:center;margin:20px 0;flex-wrap:wrap}
         .btn{padding:12px 28px;border:none;border-radius:22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;gap:7px}
-        .btn:active{transform:scale(.97)}
         .btn-go{background:linear-gradient(45deg,#ff4d6d,#c9184a);color:#fff;box-shadow:0 4px 16px rgba(255,77,109,.5);font-size:16px;padding:14px 34px}
-        .btn-go:hover{box-shadow:0 6px 24px rgba(255,77,109,.7);transform:translateY(-1px)}
         .btn-go:disabled{opacity:.5;cursor:wait}
         .btn-pv{background:rgba(255,77,109,.12);color:#ff85a1;border:1px solid rgba(255,77,109,.3)}
         .btn-rst{background:rgba(255,255,255,.05);color:#888;border:1px solid rgba(255,255,255,.1)}
-
-        /* Progress */
         .progress{display:none;text-align:center;margin:15px 0}
         .progress.show{display:block}
         .pbar-wrap{background:rgba(255,255,255,.1);border-radius:10px;height:8px;margin:10px auto;max-width:400px;overflow:hidden}
         .pbar{height:100%;background:linear-gradient(90deg,#ff4d6d,#ffd700);border-radius:10px;width:0;transition:width .4s}
         .ptext{font-size:12px;color:#ff85a1}
-
-        /* Result */
         .result{display:none;margin:20px 0;background:rgba(0,200,100,.06);border:1px solid rgba(0,200,100,.3);border-radius:14px;padding:20px;animation:fadeIn .5s}
         .result.show{display:block}
         .res-t{color:#0c6;font-size:15px;font-weight:700;margin-bottom:10px}
         .lk-box{display:flex;gap:8px;margin-bottom:10px}
         .lk-box input{flex:1;background:rgba(0,0,0,.8);border-color:rgba(0,200,100,.3);color:#0c6;font-size:13px}
-        .cp-btn{background:#0c6;border:none;color:#000;padding:0 16px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit;white-space:nowrap;transition:.2s}
-        .cp-btn:hover{background:#0e7}
+        .cp-btn{background:#0c6;border:none;color:#000;padding:0 16px;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit;white-space:nowrap}
         .cp-btn.copied{background:#ffd700}
         .share-btns{display:flex;gap:8px;flex-wrap:wrap}
-        .sb{padding:7px 14px;border-radius:16px;border:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:.2s}
+        .sb{padding:7px 14px;border-radius:16px;border:none;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600}
         .sb-open{background:rgba(255,77,109,.15);color:#ff85a1;border:1px solid rgba(255,77,109,.3)}
         .sb-wa{background:rgba(37,211,102,.15);color:#25d366;border:1px solid rgba(37,211,102,.3)}
         .sb-fb{background:rgba(66,103,178,.15);color:#4267B2;border:1px solid rgba(66,103,178,.3)}
-
-        /* Preview */
         .pv-sec{margin-top:18px;display:none}
-        .pv-sec.show{display:block}
         .pv-frame{width:100%;height:580px;border:2px solid rgba(255,77,109,.3);border-radius:12px;background:#000}
-
-        /* History */
         .h-item{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:rgba(0,0,0,.3);border-radius:9px;margin-bottom:6px;border:1px solid rgba(255,77,109,.1)}
         .h-name{color:#ffb3c6;font-weight:600;font-size:13px}
         .h-date{color:#555;font-size:10px}
@@ -112,13 +79,9 @@
         .hb-c{background:rgba(0,200,100,.15);color:#0c6}
         .hb-d{background:rgba(255,0,0,.1);color:#f44}
         .empty-h{text-align:center;color:#444;padding:15px;font-size:12px}
-
-        /* Toast */
         .toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#0c6;color:#000;padding:10px 24px;border-radius:22px;font-weight:700;font-size:13px;z-index:99999;opacity:0;transition:opacity .3s;pointer-events:none}
         .toast.show{opacity:1}
         .toast.err{background:#ff4444;color:#fff}
-
-        /* Error */
         .err-box{background:rgba(255,0,0,.08);border:1px solid rgba(255,0,0,.3);border-radius:10px;padding:12px;margin:10px 0;display:none;font-size:12px;color:#ff6666}
         .err-box.show{display:block}
     </style>
@@ -130,10 +93,9 @@
 <div class="wrap">
     <div class="hdr">
         <h1>🌹 3D Gift Creator</h1>
-        <p>এডিট করুন → Netlify তে ডিপ্লয় করুন → লিংক পান → পাঠিয়ে দিন</p>
+        <p>এডিট করুন → Netlify তে ডিপ্লয় করুন → লিংক পান</p>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs">
         <button class="tab active" onclick="showTab(0)">✏️ এডিট</button>
         <button class="tab" onclick="showTab(1)">🔑 Netlify সেটআপ</button>
@@ -141,60 +103,51 @@
         <button class="tab" onclick="showTab(3)">📜 হিস্ট্রি</button>
     </div>
 
-    <!-- TAB 0: Edit -->
+    <!-- TAB 0 -->
     <div class="sec active" id="tab0">
-        <!-- 3D Text -->
         <div class="card">
             <div class="card-t"><span>🎯</span> 3D টেক্সট সেটিংস</div>
             <div class="row">
                 <div class="fg">
-                    <label>👤 নাম <span class="ht">(যাকে গিফট দিবেন)</span></label>
-                    <input type="text" id="f_name" value="Mariya" placeholder="নাম লিখুন">
+                    <label>👤 নাম</label>
+                    <input type="text" id="f_name" value="Mariya">
                 </div>
                 <div class="fg">
-                    <label>🎉 উপরের লেখা (Line 1)</label>
-                    <input type="text" id="f_happy" value="Happy" placeholder="Happy">
+                    <label>🎉 Line 1</label>
+                    <input type="text" id="f_happy" value="Happy">
                 </div>
                 <div class="fg">
-                    <label>🎂 মাঝের লেখা (Line 2)</label>
-                    <input type="text" id="f_bday" value="17th Birthday" placeholder="17th Birthday">
+                    <label>🎂 Line 2</label>
+                    <input type="text" id="f_bday" value="17th Birthday">
                 </div>
                 <div class="fg">
-                    <label>☁️ Cloud Text (EN)</label>
+                    <label>☁️ Cloud EN</label>
                     <input type="text" id="f_cloud" value="Happy Birthday Mariya">
                 </div>
                 <div class="fg">
-                    <label>☁️ Cloud Text (বাংলা)</label>
+                    <label>☁️ Cloud বাংলা</label>
                     <input type="text" id="f_cloudbn" value="শুভ জন্মদিন Mariya">
                 </div>
             </div>
         </div>
 
-        <!-- Images -->
         <div class="card">
             <div class="card-t"><span>🖼️</span> ছবি সেটিংস</div>
             <div class="row">
                 <div class="fg">
-                    <label>📸 প্রশ্নের ছবি (Screen 3)</label>
-                    <input type="text" id="f_img1" value="https://i.ibb.co/pvPVC5dV/image.png" placeholder="Image URL">
-                    <div class="ip-row">
-                        <img class="ip-img" id="pv1" src="https://i.ibb.co/pvPVC5dV/image.png">
-                        <span class="ip-st" id="st1">checking...</span>
-                    </div>
+                    <label>📸 প্রশ্নের ছবি</label>
+                    <input type="text" id="f_img1" value="https://i.ibb.co/pvPVC5dV/image.png">
+                    <div class="ip-row"><img class="ip-img" id="pv1" src="https://i.ibb.co/pvPVC5dV/image.png"><span class="ip-st" id="st1">checking...</span></div>
                 </div>
                 <div class="fg">
-                    <label>📸 সফলতার ছবি (Screen 4)</label>
-                    <input type="text" id="f_img2" value="https://i.ibb.co/ymwLH6r0/image.png" placeholder="Image URL">
-                    <div class="ip-row">
-                        <img class="ip-img" id="pv2" src="https://i.ibb.co/ymwLH6r0/image.png">
-                        <span class="ip-st" id="st2">checking...</span>
-                    </div>
+                    <label>📸 সফলতার ছবি</label>
+                    <input type="text" id="f_img2" value="https://i.ibb.co/ymwLH6r0/image.png">
+                    <div class="ip-row"><img class="ip-img" id="pv2" src="https://i.ibb.co/ymwLH6r0/image.png"><span class="ip-st" id="st2">checking...</span></div>
                 </div>
             </div>
-            <div class="tip">💡 ছবি আপলোড: <a href="https://imgbb.com" target="_blank">imgbb.com</a> বা <a href="https://imgur.com" target="_blank">imgur.com</a> এ আপলোড করে Direct Link কপি করুন</div>
+            <div class="tip">💡 ছবি আপলোড: <a href="https://imgbb.com" target="_blank">imgbb.com</a> বা <a href="https://imgur.com" target="_blank">imgur.com</a></div>
         </div>
 
-        <!-- Messages -->
         <div class="card">
             <div class="card-t"><span>💬</span> মেসেজ সেটিংস</div>
             <div class="row">
@@ -219,79 +172,62 @@
 
         <div class="btns">
             <button class="btn btn-pv" onclick="localPreview()">👁️ প্রিভিউ দেখুন</button>
-            <button class="btn btn-go" onclick="showTab(1)">পরবর্তী: Netlify সেটআপ ➡️</button>
+            <button class="btn btn-go" onclick="showTab(1)">পরবর্তী ➡️</button>
         </div>
 
-        <div class="pv-sec" id="pv-local">
-            <iframe id="pv-frame-local" class="pv-frame"></iframe>
-        </div>
+        <div class="pv-sec" id="pv-local"><iframe id="pv-frame-local" class="pv-frame"></iframe></div>
     </div>
 
-    <!-- TAB 1: Netlify Setup -->
+    <!-- TAB 1 -->
     <div class="sec" id="tab1">
         <div class="nl-box">
-            <h3>🔑 Netlify Token কিভাবে পাবেন (একবারই করতে হবে)</h3>
+            <h3>🔑 Netlify Token পাওয়ার নিয়ম</h3>
             <div class="nl-steps">
-                <b>Step 1:</b> <a href="https://app.netlify.com" target="_blank">app.netlify.com</a> এ যান → Sign Up / Login করুন (GitHub দিয়ে করলে সহজ)<br><br>
-                <b>Step 2:</b> Login এর পর উপরে ডানে আপনার Avatar/Profile ক্লিক করুন<br><br>
-                <b>Step 3:</b> <b>"User Settings"</b> এ ক্লিক করুন<br><br>
-                <b>Step 4:</b> বামে <b>"Applications"</b> ক্লিক করুন<br><br>
-                <b>Step 5:</b> <b>"Personal access tokens"</b> সেকশনে <b>"New access token"</b> এ ক্লিক করুন<br><br>
-                <b>Step 6:</b> Description এ যেকোনো নাম দিন (যেমন: "gift-creator") → <b>"Generate token"</b> ক্লিক করুন<br><br>
-                <b>Step 7:</b> যে Token দেখাবে সেটা <b>কপি করে নিচে পেস্ট করুন</b><br><br>
-                ⚠️ Token একবারই দেখাবে, তাই কপি করে রাখুন! এটা আপনার ব্রাউজারে সেভ থাকবে।
+                <b>1:</b> <a href="https://app.netlify.com" target="_blank">app.netlify.com</a> এ Login করুন<br>
+                <b>2:</b> User Settings → Applications → Personal access tokens<br>
+                <b>3:</b> "New access token" এ চাপ দিয়ে টোকেন তৈরি করুন ও নিচে পেস্ট করুন।
             </div>
         </div>
-
         <div class="card">
-            <div class="card-t"><span>🔐</span> Netlify API Token</div>
-            <div class="fg">
-                <label>আপনার Personal Access Token পেস্ট করুন:</label>
-                <input type="password" id="f_token" placeholder="nfp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
-            </div>
+            <div class="card-t"><span>🔐</span> Access Token</div>
+            <div class="fg"><input type="password" id="f_token" placeholder="nfp_xxxxxxxxxxxxxxxxxxxx"></div>
             <div style="display:flex;gap:8px;margin-top:8px">
-                <button class="btn btn-pv" onclick="testToken()" style="padding:8px 16px;font-size:12px">🔍 Token টেস্ট করুন</button>
-                <button class="btn btn-pv" onclick="saveToken()" style="padding:8px 16px;font-size:12px">💾 Token সেভ করুন</button>
+                <button class="btn btn-pv" onclick="testToken()" style="padding:8px 16px;font-size:12px">🔍 টেস্ট করুন</button>
+                <button class="btn btn-pv" onclick="saveToken()" style="padding:8px 16px;font-size:12px">💾 সেভ করুন</button>
             </div>
             <div class="err-box" id="token-status"></div>
         </div>
-
         <div class="btns">
-            <button class="btn btn-rst" onclick="showTab(0)">⬅️ আগের ধাপ</button>
-            <button class="btn btn-go" onclick="showTab(2)">পরবর্তী: ডিপ্লয় ➡️</button>
+            <button class="btn btn-rst" onclick="showTab(0)">⬅️ পিছনে</button>
+            <button class="btn btn-go" onclick="showTab(2)">পরবর্তী ➡️</button>
         </div>
     </div>
 
-    <!-- TAB 2: Deploy -->
+    <!-- TAB 2 -->
     <div class="sec" id="tab2">
         <div class="card">
-            <div class="card-t"><span>🚀</span> Netlify তে ডিপ্লয় করুন</div>
+            <div class="card-t"><span>🚀</span> ডিপ্লয় সেটিংস</div>
             <div class="fg">
-                <label>সাইটের নাম <span class="ht">(ইংরেজি, ছোট হাতের, শুধু a-z 0-9 আর - )</span></label>
+                <label>সাইটের নাম</label>
                 <input type="text" id="f_sitename" placeholder="mariya-birthday-gift" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')">
-                <div style="font-size:10px;color:#888;margin-top:4px">লিংক হবে: <span style="color:#0c6" id="url-preview">your-name.netlify.app</span></div>
+                <div style="font-size:10px;color:#888;margin-top:4px">লিংক: <span style="color:#0c6" id="url-preview">mariya-birthday-gift.netlify.app</span></div>
             </div>
         </div>
-
         <div class="card" id="summary-card">
-            <div class="card-t"><span>📋</span> সামারি - যা ডিপ্লয় হবে</div>
+            <div class="card-t"><span>📋</span> সামারি</div>
             <div id="summary" style="font-size:12px;color:#aaa;line-height:1.8"></div>
         </div>
-
         <div class="btns">
-            <button class="btn btn-rst" onclick="showTab(1)">⬅️ আগের ধাপ</button>
-            <button class="btn btn-go" id="deploy-btn" onclick="deployToNetlify()">🚀 এখনই ডিপ্লয় করুন</button>
+            <button class="btn btn-rst" onclick="showTab(1)">⬅️ পিছনে</button>
+            <button class="btn btn-go" id="deploy-btn" onclick="deployToNetlify()">🚀 ডিপ্লয় করুন</button>
         </div>
-
         <div class="progress" id="prog">
             <div class="ptext" id="prog-text">প্রস্তুত হচ্ছে...</div>
             <div class="pbar-wrap"><div class="pbar" id="pbar"></div></div>
         </div>
-
         <div class="err-box" id="deploy-err"></div>
-
         <div class="result" id="result">
-            <div class="res-t">✅ সফলভাবে ডিপ্লয় হয়েছে!</div>
+            <div class="res-t">✅ ডিপ্লয় সফল হয়েছে!</div>
             <div class="lk-box">
                 <input type="text" id="final-url" readonly>
                 <button class="cp-btn" id="cp-btn" onclick="copyFinalLink()">📋 কপি</button>
@@ -302,82 +238,60 @@
                 <button class="sb sb-fb" onclick="shareFB()">💙 Facebook</button>
             </div>
         </div>
-
-        <div class="pv-sec" id="pv-deploy">
-            <iframe id="pv-frame-deploy" class="pv-frame"></iframe>
-        </div>
+        <div class="pv-sec" id="pv-deploy"><iframe id="pv-frame-deploy" class="pv-frame"></iframe></div>
     </div>
 
-    <!-- TAB 3: History -->
+    <!-- TAB 3 -->
     <div class="sec" id="tab3">
-        <div class="card">
-            <div class="card-t"><span>📜</span> ডিপ্লয় হিস্ট্রি</div>
-            <div id="hist-list"></div>
-        </div>
+        <div class="card"><div class="card-t"><span>📜</span> আগের তৈরি লিংক</div><div id="hist-list"></div></div>
     </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ BG Hearts ============
 const bgfx=document.getElementById('bgfx');
 for(let i=0;i<12;i++){const s=document.createElement('span');s.innerHTML=['❤️','💕','🌹','💖','✨'][~~(Math.random()*5)];s.style.left=Math.random()*100+'%';s.style.animationDelay=Math.random()*9+'s';s.style.animationDuration=(6+Math.random()*6)+'s';bgfx.appendChild(s)}
 
-// ============ Tabs ============
 const tabs=document.querySelectorAll('.tab');
 const secs=document.querySelectorAll('.sec');
 function showTab(i){
-    tabs.forEach((t,j)=>{t.classList.toggle('active',j===i)});
-    secs.forEach((s,j)=>{s.classList.toggle('active',j===i)});
+    tabs.forEach((t,j)=>t.classList.toggle('active',j===i));
+    secs.forEach((s,j)=>s.classList.toggle('active',j===i));
     if(i===2)updateSummary();
 }
 
-// ============ Image Check ============
 function imgCheck(iid,pid,sid){
     const inp=document.getElementById(iid),pv=document.getElementById(pid),st=document.getElementById(sid);
     inp.addEventListener('input',()=>{const u=inp.value.trim();if(!u){st.textContent='❌ খালি';st.className='ip-st fail';pv.src='';return}st.textContent='⏳...';st.className='ip-st';pv.src=u});
     pv.onload=()=>{st.textContent='✅ OK';st.className='ip-st ok'};
     pv.onerror=()=>{st.textContent='❌ ভুল';st.className='ip-st fail'};
-    if(pv.complete&&pv.naturalWidth>0){st.textContent='✅ OK';st.className='ip-st ok'}
 }
 imgCheck('f_img1','pv1','st1');imgCheck('f_img2','pv2','st2');
 
-// Auto cloud
 document.getElementById('f_name').addEventListener('input',function(){
     const n=this.value.trim();
     document.getElementById('f_cloud').value='Happy Birthday '+n;
     document.getElementById('f_cloudbn').value='শুভ জন্মদিন '+n;
-    document.getElementById('f_sitename').value=(n.toLowerCase().replace(/[^a-z0-9]/g,'')||'gift')+'-birthday-gift';
+    document.getElementById('f_sitename').value=(n.toLowerCase().replace(/[^a-z0-9]/g,'')||'gift')+'-birthday';
     updUrlPrev();
 });
 document.getElementById('f_sitename').addEventListener('input',updUrlPrev);
-function updUrlPrev(){document.getElementById('url-preview').textContent=(document.getElementById('f_sitename').value||'your-name')+'.netlify.app'}
+function updUrlPrev(){document.getElementById('url-preview').textContent=(document.getElementById('f_sitename').value||'name')+'.netlify.app'}
 
-// ============ Token ============
-window.addEventListener('load',()=>{
-    const saved=localStorage.getItem('netlify_token');
-    if(saved)document.getElementById('f_token').value=saved;
-});
-function saveToken(){
-    const t=document.getElementById('f_token').value.trim();
-    if(!t){toast('⚠️ Token লিখুন!',true);return}
-    localStorage.setItem('netlify_token',t);
-    toast('💾 Token সেভ হয়েছে!');
-}
+window.addEventListener('load',()=>{const saved=localStorage.getItem('netlify_token');if(saved)document.getElementById('f_token').value=saved});
+function saveToken(){const t=document.getElementById('f_token').value.trim();if(!t){toast('⚠️ Token দিন!',true);return}localStorage.setItem('netlify_token',t);toast('💾 Token সেভ হয়েছে!')}
 async function testToken(){
-    const t=document.getElementById('f_token').value.trim();
-    const el=document.getElementById('token-status');
+    const t=document.getElementById('f_token').value.trim(),el=document.getElementById('token-status');
     if(!t){el.textContent='❌ Token দিন';el.className='err-box show';return}
-    el.textContent='⏳ টেস্ট করা হচ্ছে...';el.className='err-box show';el.style.color='#ffd700';
+    el.textContent='⏳ চেক হচ্ছে...';el.className='err-box show';el.style.color='#ffd700';
     try{
         const r=await fetch('https://api.netlify.com/api/v1/user',{headers:{'Authorization':'Bearer '+t}});
         if(r.ok){const d=await r.json();el.textContent='✅ Token কাজ করছে! ('+d.email+')';el.style.color='#0c6';saveToken()}
-        else{el.textContent='❌ Token ভুল বা expired (Status: '+r.status+')';el.style.color='#f44'}
-    }catch(e){el.textContent='❌ নেটওয়ার্ক সমস্যা: '+e.message;el.style.color='#f44'}
+        else{el.textContent='❌ Token ভুল!';el.style.color='#f44'}
+    }catch(e){el.textContent='❌ এরর: '+e.message;el.style.color='#f44'}
 }
 
-// ============ Summary ============
 function getVals(){
     return{
         name:document.getElementById('f_name').value.trim(),
@@ -395,22 +309,9 @@ function getVals(){
 }
 function updateSummary(){
     const v=getVals();
-    document.getElementById('summary').innerHTML=`
-        <b>👤 নাম:</b> ${v.name}<br>
-        <b>🎉 Line 1:</b> ${v.happy}<br>
-        <b>🎂 Line 2:</b> ${v.bday}<br>
-        <b>☁️ Cloud EN:</b> ${v.cloud}<br>
-        <b>☁️ Cloud BN:</b> ${v.cloudbn}<br>
-        <b>📸 ছবি ১:</b> <span style="color:#888;font-size:10px">${v.img1.slice(0,50)}...</span><br>
-        <b>📸 ছবি ২:</b> <span style="color:#888;font-size:10px">${v.img2.slice(0,50)}...</span><br>
-        <b>❓ প্রশ্ন EN:</b> ${v.q.slice(0,50)}...<br>
-        <b>❓ প্রশ্ন BN:</b> ${v.qbn.slice(0,50)}...<br>
-        <b>✅ Success EN:</b> ${v.s.slice(0,50)}...<br>
-        <b>✅ Success BN:</b> ${v.sbn.slice(0,50)}...
-    `;
+    document.getElementById('summary').innerHTML=`<b>👤 নাম:</b> ${v.name}<br><b>🎉 Line 1:</b> ${v.happy}<br><b>🎂 Line 2:</b> ${v.bday}<br><b>☁️ Cloud EN:</b> ${v.cloud}<br><b>☁️ Cloud BN:</b> ${v.cloudbn}`;
 }
 
-// ============ Generate HTML ============
 function buildGiftHTML(v){
 return `<!DOCTYPE html>
 <html lang="en">
@@ -445,6 +346,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0005;color:#fff;f
 .no-placeholder{width:95px;height:42px}
 .btn-no{background:#fff;color:#ff4d6d;box-shadow:0 4px 15px rgba(0,0,0,.3);z-index:99;transition:left .18s ease,top .18s ease}
 </style>
+<script>
+window.__GIFT__ = ${JSON.stringify(v)};
+<\/script>
 </head>
 <body>
 <button id="lang-btn" class="top-btn" onclick="toggleLanguage()">বাং / EN</button>
@@ -460,7 +364,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0005;color:#fff;f
 </div>
 <div id="screen3" class="screen">
 <div class="card" id="main-card">
-<img class="photo" id="img3" alt="Image" src="${v.img1}" onerror="this.onerror=null;this.src='https://media.tenor.com/J3Z-oV4s_o0AAAAi/mochi-peach-cat.gif';">
+<img class="photo" id="img3" alt="Image" src="${v.img1}">
 <div class="question-text" id="t-question">${v.q}</div>
 <div class="btn-container">
 <button class="btn btn-yes" onclick="goToScreen(4)" id="t-yes">Yes</button>
@@ -470,7 +374,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0005;color:#fff;f
 </div>
 <div id="screen4" class="screen">
 <div class="card">
-<img class="photo" id="img4" alt="Image" src="${v.img2}" onerror="this.onerror=null;this.src='https://media.tenor.com/ZSp7h0k0q1MAAAAi/mochi-peach.gif';">
+<img class="photo" id="img4" alt="Image" src="${v.img2}">
 <div class="question-text" id="t-success" style="font-size:20px;">${v.s}</div>
 </div>
 </div>
@@ -482,8 +386,7 @@ import * as THREE from 'three';
 import{OrbitControls}from'three/addons/controls/OrbitControls.js';
 import{FontLoader}from'three/addons/loaders/FontLoader.js';
 import{TextGeometry}from'three/addons/geometries/TextGeometry.js';
-const GIFT=${JSON.stringify({name:v.name,happy:v.happy,bday:v.bday,cloud:v.cloud,cloudbn:v.cloudbn,q:v.q,qbn:v.qbn,s:v.s,sbn:v.sbn,img1:v.img1,img2:v.img2})};
-window.__GIFT__=GIFT;
+const GIFT = window.__GIFT__;
 const canvas=document.getElementById('canvas3d');
 const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x0a0005,.012);
 const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,500);camera.position.set(0,.5,16);
@@ -517,227 +420,148 @@ window.__set3DScreen(1);
 <\/script>
 <script>
 window.currentScreen=1;
-const GIFTD=window.__GIFT__;
+let currentLang='en';
 function goToScreen(n){window.currentScreen=n;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen'+n).classList.add('active');document.getElementById('back-btn').style.display=n>1?'block':'none';if(window.__set3DScreen)window.__set3DScreen(n)}
 function goBack(){if(window.currentScreen>1)goToScreen(window.currentScreen-1)}
 const noBtn=document.getElementById('btn-no');const card=document.getElementById('main-card');
 function moveNoBtn(){noBtn.style.position='absolute';const pad=12,bw=noBtn.offsetWidth||95,bh=noBtn.offsetHeight||42;const mx=Math.max(pad,card.clientWidth-bw-pad),my=Math.max(pad,card.clientHeight-bh-pad);noBtn.style.left=(~~(Math.random()*(mx-pad+1))+pad)+'px';noBtn.style.top=(~~(Math.random()*(my-pad+1))+pad)+'px'}
 noBtn.addEventListener('mouseover',moveNoBtn);noBtn.addEventListener('touchstart',e=>{e.preventDefault();moveNoBtn()},{passive:false});noBtn.addEventListener('click',moveNoBtn);
-let currentLang='en';
-const texts={
-bn:{back:'⬅️ পিছনে',next1:'পরবর্তী ধাপ ➡️',next2:'এগিয়ে যাও ➡️',hint1:'👆 টেনে ঘোরাও · 3D',hint2:'টেনে ঘোরাও · চিমটি জুম',cloudText:()=>GIFTD.cloudbn,question:GIFTD.qbn,yes:'হ্যাঁ',no:'না',success:GIFTD.sbn,btnText:'EN / বাং'},
-en:{back:'⬅️ Back',next1:'Go to Next Step ➡️',next2:'Continue ➡️',hint1:'👆 Drag to rotate 3D model',hint2:'Drag rotate · Pinch zoom · Move',cloudText:()=>GIFTD.cloud,question:GIFTD.q,yes:'Yes',no:'No',success:GIFTD.s,btnText:'বাং / EN'}
-};
-function toggleLanguage(){currentLang=currentLang==='en'?'bn':'en';const t=texts[currentLang];document.getElementById('back-btn').innerHTML=t.back;document.getElementById('t-next1').innerHTML=t.next1;document.getElementById('t-next2').innerHTML=t.next2;document.getElementById('hint1').innerHTML=t.hint1;document.getElementById('hint2').innerHTML=t.hint2;document.getElementById('t-question').innerHTML=t.question;document.getElementById('t-yes').innerHTML=t.yes;document.getElementById('btn-no').innerHTML=t.no;document.getElementById('t-success').innerHTML=t.success;document.getElementById('lang-btn').innerHTML=t.btnText;if(window.rebuildCloudSprites)window.rebuildCloudSprites(t.cloudText())}
+
+function toggleLanguage(){
+    currentLang = currentLang === 'en' ? 'bn' : 'en';
+    const G = window.__GIFT__ || {};
+    const texts = {
+        bn: {
+            back: '⬅️ পিছনে', next1: 'পরবর্তী ধাপ ➡️', next2: 'এগিয়ে যাও ➡️',
+            hint1: '👆 টেনে ঘোরাও · 3D', hint2: 'টেনে ঘোরাও · চিমটি জুম',
+            cloudText: G.cloudbn || 'শুভ জন্মদিন',
+            question: G.qbn || '', yes: 'হ্যাঁ', no: 'না',
+            success: G.sbn || '', btnText: 'EN / বাং'
+        },
+        en: {
+            back: '⬅️ Back', next1: 'Go to Next Step ➡️', next2: 'Continue ➡️',
+            hint1: '👆 Drag to rotate 3D model', hint2: 'Drag rotate · Pinch zoom · Move',
+            cloudText: G.cloud || 'Happy Birthday',
+            question: G.q || '', yes: 'Yes', no: 'No',
+            success: G.s || '', btnText: 'বাং / EN'
+        }
+    };
+    const t = texts[currentLang];
+    document.getElementById('back-btn').innerHTML = t.back;
+    document.getElementById('t-next1').innerHTML = t.next1;
+    document.getElementById('t-next2').innerHTML = t.next2;
+    document.getElementById('hint1').innerHTML = t.hint1;
+    document.getElementById('hint2').innerHTML = t.hint2;
+    document.getElementById('t-question').innerHTML = t.question;
+    document.getElementById('t-yes').innerHTML = t.yes;
+    document.getElementById('btn-no').innerHTML = t.no;
+    document.getElementById('t-success').innerHTML = t.success;
+    document.getElementById('lang-btn').innerHTML = t.btnText;
+    if (window.rebuildCloudSprites) window.rebuildCloudSprites(t.cloudText);
+}
 <\/script>
 </body>
 </html>`;
 }
 
-// ============ Local Preview ============
 function localPreview(){
-    const v=getVals();
-    const html=buildGiftHTML(v);
-    const blob=new Blob([html],{type:'text/html'});
-    const url=URL.createObjectURL(blob);
-    const sec=document.getElementById('pv-local');
-    document.getElementById('pv-frame-local').src=url;
-    sec.style.display='block';
-    sec.scrollIntoView({behavior:'smooth'});
+    const v=getVals(),html=buildGiftHTML(v),blob=new Blob([html],{type:'text/html'}),url=URL.createObjectURL(blob),sec=document.getElementById('pv-local');
+    document.getElementById('pv-frame-local').src=url;sec.style.display='block';sec.scrollIntoView({behavior:'smooth'});
 }
 
-// ============ Deploy to Netlify ============
 async function deployToNetlify(){
     const token=document.getElementById('f_token').value.trim()||localStorage.getItem('netlify_token');
     if(!token){toast('⚠️ আগে Netlify Token দিন! Tab 2 এ যান',true);showTab(1);return}
-
     const sitename=document.getElementById('f_sitename').value.trim();
     if(!sitename){toast('⚠️ সাইটের নাম দিন!',true);return}
-    if(!/^[a-z0-9][a-z0-9-]*[a-z0-9]$/.test(sitename)&&sitename.length>1||sitename.length<2){
-        toast('⚠️ সাইটের নাম ভুল! শুধু a-z, 0-9, - ব্যবহার করুন',true);return}
+    const v=getVals();if(!v.name){toast('⚠️ নাম লিখুন!',true);showTab(0);return}
 
-    const v=getVals();
-    if(!v.name){toast('⚠️ নাম লিখুন!',true);showTab(0);return}
-
-    const btn=document.getElementById('deploy-btn');
-    btn.disabled=true;btn.textContent='⏳ ডিপ্লয় হচ্ছে...';
+    const btn=document.getElementById('deploy-btn');btn.disabled=true;btn.textContent='⏳ ডিপ্লয় হচ্ছে...';
     const prog=document.getElementById('prog');prog.classList.add('show');
-    const pbar=document.getElementById('pbar');
-    const ptxt=document.getElementById('prog-text');
-    const errEl=document.getElementById('deploy-err');
+    const pbar=document.getElementById('pbar'),ptxt=document.getElementById('prog-text'),errEl=document.getElementById('deploy-err');
     errEl.className='err-box';
 
     try{
-        // Step 1: Generate HTML
         ptxt.textContent='📄 HTML তৈরি হচ্ছে...';pbar.style.width='15%';
         const html=buildGiftHTML(v);
+        ptxt.textContent='📦 ফাইল প্রসেস হচ্ছে...';pbar.style.width='30%';
 
-        // Step 2: Create ZIP
-        ptxt.textContent='📦 ফাইল প্যাক হচ্ছে...';pbar.style.width='30%';
-
-        // We'll use the Netlify file digest API instead of ZIP
-        // Convert HTML to base64
-        const encoder=new TextEncoder();
-        const htmlBytes=encoder.encode(html);
-
-        // Calculate SHA1 hash
+        const encoder=new TextEncoder(),htmlBytes=encoder.encode(html);
         const hashBuffer=await crypto.subtle.digest('SHA-1',htmlBytes);
-        const hashArray=Array.from(new Uint8Array(hashBuffer));
-        const sha1=hashArray.map(b=>b.toString(16).padStart(2,'0')).join('');
+        const sha1=Array.from(new Uint8Array(hashBuffer)).map(b=>b.toString(16).padStart(2,'0')).join('');
 
-        // Step 3: Create site
         ptxt.textContent='🌐 Netlify সাইট তৈরি হচ্ছে...';pbar.style.width='45%';
+        let siteId, siteUrl;
 
-        // Try to create site with custom name
-        let siteId;
-        let siteUrl;
-
-        // First try creating with desired name
         const createRes=await fetch('https://api.netlify.com/api/v1/sites',{
             method:'POST',
             headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-            body:JSON.stringify({name:sitename,custom_domain:null})
+            body:JSON.stringify({name:sitename})
         });
 
         if(createRes.ok){
-            const siteData=await createRes.json();
-            siteId=siteData.id;
-            siteUrl=siteData.ssl_url||siteData.url;
+            const d=await createRes.json();siteId=d.id;siteUrl=d.ssl_url||d.url;
         }else if(createRes.status===422){
-            // Name taken, try with random suffix
             const rname=sitename+'-'+Math.random().toString(36).slice(2,6);
-            const createRes2=await fetch('https://api.netlify.com/api/v1/sites',{
+            const c2=await fetch('https://api.netlify.com/api/v1/sites',{
                 method:'POST',
                 headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
                 body:JSON.stringify({name:rname})
             });
-            if(!createRes2.ok){
-                const err=await createRes2.text();
-                throw new Error('সাইট তৈরি ব্যর্থ: '+err);
-            }
-            const siteData2=await createRes2.json();
-            siteId=siteData2.id;
-            siteUrl=siteData2.ssl_url||siteData2.url;
+            if(!c2.ok) throw new Error('নামটি অন্য কেউ ব্যবহার করছে!');
+            const d2=await c2.json();siteId=d2.id;siteUrl=d2.ssl_url||d2.url;
         }else{
-            const err=await createRes.text();
-            throw new Error('সাইট তৈরি ব্যর্থ ('+createRes.status+'): '+err);
+            throw new Error('Netlify টোকেন ভুল বা মেয়াদ শেষ!');
         }
 
-        // Step 4: Deploy files using file digest
-        ptxt.textContent='📤 ফাইল আপলোড হচ্ছে...';pbar.style.width='60%';
-
-        const deployRes=await fetch(`https://api.netlify.com/api/v1/sites/${siteId}/deploys`,{
+        ptxt.textContent='📤 ফাইল আপলোড হচ্ছে...';pbar.style.width='65%';
+        const depRes=await fetch(`https://api.netlify.com/api/v1/sites/${siteId}/deploys`,{
             method:'POST',
             headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},
-            body:JSON.stringify({
-                files:{'/index.html':sha1}
-            })
+            body:JSON.stringify({files:{'/index.html':sha1}})
         });
+        const depData=await depRes.json();
 
-        if(!deployRes.ok){
-            const err=await deployRes.text();
-            throw new Error('ডিপ্লয় শুরু ব্যর্থ: '+err);
-        }
-
-        const deployData=await deployRes.json();
-        const deployId=deployData.id;
-
-        // Step 5: Upload the file
-        ptxt.textContent='📤 HTML আপলোড হচ্ছে...';pbar.style.width='75%';
-
-        const uploadRes=await fetch(`https://api.netlify.com/api/v1/deploys/${deployId}/files/index.html`,{
+        await fetch(`https://api.netlify.com/api/v1/deploys/${depData.id}/files/index.html`,{
             method:'PUT',
-            headers:{
-                'Authorization':'Bearer '+token,
-                'Content-Type':'application/octet-stream'
-            },
+            headers:{'Authorization':'Bearer '+token,'Content-Type':'application/octet-stream'},
             body:htmlBytes
         });
 
-        if(!uploadRes.ok){
-            const err=await uploadRes.text();
-            throw new Error('ফাইল আপলোড ব্যর্থ: '+err);
-        }
-
-        // Step 6: Wait for deploy to be ready
-        ptxt.textContent='⏳ ডিপ্লয় প্রসেস হচ্ছে...';pbar.style.width='90%';
-
-        // Poll deploy status
-        let ready=false;
-        for(let i=0;i<20;i++){
-            await new Promise(r=>setTimeout(r,1500));
-            const statusRes=await fetch(`https://api.netlify.com/api/v1/deploys/${deployId}`,{
-                headers:{'Authorization':'Bearer '+token}
-            });
-            if(statusRes.ok){
-                const sd=await statusRes.json();
-                if(sd.state==='ready'){ready=true;siteUrl=sd.ssl_url||sd.url;break}
-                if(sd.state==='error')throw new Error('ডিপ্লয় এরর: '+sd.error_message);
-            }
-        }
-
-        if(!ready){
-            // Still might be fine, let's use the URL we have
-            console.log('Deploy still processing but URL should work soon');
-        }
-
-        // Step 7: Done!
-        pbar.style.width='100%';
-        ptxt.textContent='✅ সম্পন্ন!';
-
+        pbar.style.width='100%';ptxt.textContent='✅ সম্পন্ন!';
         document.getElementById('final-url').value=siteUrl;
         document.getElementById('result').classList.add('show');
-
-        // Show preview
-        const pvSec=document.getElementById('pv-deploy');
         document.getElementById('pv-frame-deploy').src=siteUrl;
-        pvSec.style.display='block';
-
-        // Save history
+        document.getElementById('pv-deploy').style.display='block';
         saveHist(v.name,siteUrl,sitename);
-
         toast('🎉 সফলভাবে ডিপ্লয় হয়েছে!');
-
-        setTimeout(()=>{
-            document.getElementById('result').scrollIntoView({behavior:'smooth'});
-        },500);
+        setTimeout(()=>document.getElementById('result').scrollIntoView({behavior:'smooth'}),500);
 
     }catch(e){
-        console.error(e);
-        errEl.textContent='❌ Error: '+e.message;
-        errEl.className='err-box show';
-        toast('❌ ডিপ্লয় ব্যর্থ হয়েছে!',true);
+        errEl.textContent='❌ Error: '+e.message;errEl.className='err-box show';
+        toast('❌ ডিপ্লয় ব্যর্থ!',true);
     }finally{
-        btn.disabled=false;btn.textContent='🚀 এখনই ডিপ্লয় করুন';
-        setTimeout(()=>{prog.classList.remove('show')},3000);
+        btn.disabled=false;btn.textContent='🚀 ডিপ্লয় করুন';
+        setTimeout(()=>prog.classList.remove('show'),3000);
     }
 }
 
-// ============ Share ============
 function copyFinalLink(){
-    const inp=document.getElementById('final-url');
-    inp.select();inp.setSelectionRange(0,99999);
+    const inp=document.getElementById('final-url');inp.select();
     navigator.clipboard.writeText(inp.value).then(()=>{
-        const b=document.getElementById('cp-btn');b.classList.add('copied');b.textContent='✅ কপি হয়েছে!';
+        const b=document.getElementById('cp-btn');b.classList.add('copied');b.textContent='✅ কপি!';
         setTimeout(()=>{b.classList.remove('copied');b.textContent='📋 কপি'},2000);
-        toast('📋 লিংক কপি হয়েছে!');
+        toast('📋 কপি হয়েছে!');
     });
 }
-function shareWA(){
-    const u=document.getElementById('final-url').value;
-    const n=document.getElementById('f_name').value;
-    window.open('https://wa.me/?text='+encodeURIComponent('🌹 '+n+' এর জন্য স্পেশাল গিফট:\n'+u),'_blank');
-}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent('🌹 '+document.getElementById('f_name').value+' এর জন্য গিফট:\n'+document.getElementById('final-url').value),'_blank')}
 function shareFB(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(document.getElementById('final-url').value),'_blank')}
 
-// ============ Toast ============
 function toast(msg,isErr){
-    const t=document.getElementById('toast');
-    t.textContent=msg;t.className='toast show'+(isErr?' err':'');
+    const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(isErr?' err':'');
     setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-// ============ History ============
 function saveHist(name,url,sitename){
     let h=JSON.parse(localStorage.getItem('gift_deploys')||'[]');
     h.unshift({name,url,sitename,date:new Date().toLocaleString('bn-BD')});
@@ -746,16 +570,11 @@ function saveHist(name,url,sitename){
     renderHist();
 }
 function renderHist(){
-    const h=JSON.parse(localStorage.getItem('gift_deploys')||'[]');
-    const el=document.getElementById('hist-list');
+    const h=JSON.parse(localStorage.getItem('gift_deploys')||'[]'),el=document.getElementById('hist-list');
     if(!h.length){el.innerHTML='<div class="empty-h">🕐 এখনো কোনো ডিপ্লয় হয়নি</div>';return}
     el.innerHTML=h.map((x,i)=>`
         <div class="h-item">
-            <div>
-                <div class="h-name">🌹 ${x.name}</div>
-                <div class="h-url">${x.url}</div>
-                <div class="h-date">${x.date}</div>
-            </div>
+            <div><div class="history-name">🌹 ${x.name}</div><div class="h-url">${x.url}</div><div class="h-date">${x.date}</div></div>
             <div class="h-acts">
                 <button class="hb hb-o" onclick="window.open('${x.url}','_blank')">খুলুন</button>
                 <button class="hb hb-c" onclick="navigator.clipboard.writeText('${x.url}');toast('কপি!')">কপি</button>
@@ -766,8 +585,7 @@ function renderHist(){
 }
 function delHist(i){
     let h=JSON.parse(localStorage.getItem('gift_deploys')||'[]');
-    h.splice(i,1);localStorage.setItem('gift_deploys',JSON.stringify(h));
-    renderHist();toast('🗑️ মুছে ফেলা হয়েছে');
+    h.splice(i,1);localStorage.setItem('gift_deploys',JSON.stringify(h));renderHist();toast('🗑️ মুছে ফেলা হয়েছে');
 }
 renderHist();
 </script>
