@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌹 Gift Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #0a0005 0%, #1a0a12 50%, #0a0005 100%);
+            color: #fff; font-family: 'Poppins','Hind Siliguri',sans-serif;
+            min-height: 100vh; padding: 15px;
+        }
+
+        /* Floating Hearts Background */
+        .bg-hearts {
+            position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .bg-hearts span {
+            position: absolute; font-size: 20px; animation: floatHeart 8s infinite;
+            opacity: 0.15;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.15; }
+            90% { opacity: 0.15; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            max-width: 950px; margin: 0 auto; position: relative; z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center; padding: 25px 0 20px;
+        }
+        .header h1 {
+            font-size: 28px; color: #ff4d6d;
+            text-shadow: 0 0 20px rgba(255,77,109,0.5);
+        }
+        .header p {
+            color: #ff85a1; font-size: 14px; margin-top: 6px;
+        }
+
+        /* Steps indicator */
+        .steps {
+            display: flex; justify-content: center; gap: 8px; margin: 20px 0;
+        }
+        .step-dot {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(255,77,109,0.15); border: 2px solid rgba(255,77,109,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 700; color: #ff85a1;
+            transition: all 0.3s;
+        }
+        .step-dot.active {
+            background: #ff4d6d; border-color: #ff4d6d; color: #fff;
+            box-shadow: 0 0 15px rgba(255,77,109,0.6);
+        }
+        .step-dot.done {
+            background: rgba(0,200,100,0.3); border-color: #00c864; color: #00c864;
+        }
+        .step-line {
+            width: 30px; height: 2px; background: rgba(255,77,109,0.3);
+            align-self: center;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,77,109,0.2);
+            border-radius: 18px; padding: 22px; margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            transition: all 0.3s;
+        }
+        .card:hover {
+            border-color: rgba(255,77,109,0.5);
+            box-shadow: 0 8px 30px rgba(255,77,109,0.15);
+        }
+        .card-title {
+            font-size: 16px; color: #ff4d6d; margin-bottom: 16px;
+            font-weight: 700; display: flex; align-items: center; gap: 8px;
+        }
+        .card-title span { font-size: 20px; }
+
+        /* Form */
+        .form-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+        }
+        @media(max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 14px; }
+        .form-group.full { grid-column: 1 / -1; }
+        label {
+            display: block; font-size: 12px; color: #ff85a1;
+            margin-bottom: 5px; font-weight: 600;
+        }
+        label .hint-text {
+            color: #886; font-weight: 400; font-size: 11px;
+        }
+        input, textarea {
+            width: 100%; padding: 11px 14px;
+            background: rgba(0,0,0,0.6); border: 1px solid rgba(255,77,109,0.3);
+            border-radius: 10px; color: #fff; font-size: 14px;
+            font-family: inherit; outline: none; transition: 0.3s;
+        }
+        input:focus, textarea:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 12px rgba(255,77,109,0.3);
+        }
+        textarea { resize: vertical; min-height: 55px; }
+        input::placeholder, textarea::placeholder { color: #664455; }
+
+        /* Image Preview */
+        .img-preview-row {
+            display: flex; gap: 10px; margin-top: 8px; align-items: center;
+        }
+        .img-preview {
+            width: 50px; height: 50px; border-radius: 8px;
+            border: 1px solid rgba(255,77,109,0.3);
+            object-fit: cover; background: #111;
+        }
+        .img-status {
+            font-size: 11px; color: #888;
+        }
+        .img-status.ok { color: #00c864; }
+        .img-status.fail { color: #ff4444; }
+
+        /* Buttons */
+        .btn-row {
+            display: flex; gap: 12px; justify-content: center;
+            margin: 25px 0 15px; flex-wrap: wrap;
+        }
+        .btn {
+            padding: 13px 32px; border: none; border-radius: 25px;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn:active { transform: scale(0.97); }
+        .btn-primary {
+            background: linear-gradient(45deg, #ff4d6d, #c9184a);
+            color: #fff; box-shadow: 0 4px 18px rgba(255,77,109,0.5);
+        }
+        .btn-primary:hover { box-shadow: 0 6px 25px rgba(255,77,109,0.7); transform: translateY(-1px); }
+        .btn-secondary {
+            background: rgba(255,77,109,0.15); color: #ff85a1;
+            border: 1px solid rgba(255,77,109,0.3);
+        }
+        .btn-secondary:hover { background: rgba(255,77,109,0.25); }
+        .btn-reset {
+            background: rgba(255,255,255,0.05); color: #888;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Result Box */
+        .result-box {
+            display: none; margin-top: 20px;
+            background: rgba(0,200,100,0.05);
+            border: 1px solid rgba(0,200,100,0.3);
+            border-radius: 16px; padding: 22px;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .result-title {
+            color: #00c864; font-size: 16px; font-weight: 700;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .link-box {
+            display: flex; gap: 8px; margin-bottom: 12px;
+        }
+        .link-box input {
+            flex: 1; background: rgba(0,0,0,0.8);
+            border-color: rgba(0,200,100,0.3); color: #00c864;
+            font-size: 12px;
+        }
+        .copy-btn {
+            background: #00c864; border: none; color: #000;
+            padding: 0 18px; border-radius: 10px; cursor: pointer;
+            font-weight: 700; font-family: inherit; white-space: nowrap;
+            transition: 0.2s;
+        }
+        .copy-btn:hover { background: #00e070; }
+        .copied { background: #ffd700 !important; }
+        .action-btns {
+            display: flex; gap: 10px; flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 8px 18px; border-radius: 20px; border: none;
+            cursor: pointer; font-family: inherit; font-size: 13px;
+            font-weight: 600; transition: 0.2s;
+        }
+        .btn-open {
+            background: rgba(255,77,109,0.2); color: #ff85a1;
+            border: 1px solid rgba(255,77,109,0.3);
+        }
+        .btn-wa {
+            background: rgba(37,211,102,0.2); color: #25d366;
+            border: 1px solid rgba(37,211,102,0.3);
+        }
+        .btn-fb {
+            background: rgba(66,103,178,0.2); color: #4267B2;
+            border: 1px solid rgba(66,103,178,0.3);
+        }
+
+        /* Preview */
+        .preview-section {
+            margin-top: 20px; display: none;
+        }
+        .preview-title {
+            color: #ffb3c6; font-size: 15px; font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .preview-frame {
+            width: 100%; height: 600px; border: 2px solid rgba(255,77,109,0.3);
+            border-radius: 14px; background: #000;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #00c864; color: #000; padding: 12px 28px;
+            border-radius: 25px; font-weight: 700; font-size: 14px;
+            z-index: 99999; opacity: 0; transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+
+        /* History */
+        .history-card { margin-top: 20px; }
+        .history-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 14px; background: rgba(0,0,0,0.3);
+            border-radius: 10px; margin-bottom: 8px;
+            border: 1px solid rgba(255,77,109,0.1);
+        }
+        .history-name { color: #ffb3c6; font-weight: 600; font-size: 14px; }
+        .history-date { color: #666; font-size: 11px; }
+        .history-actions { display: flex; gap: 6px; }
+        .history-btn {
+            padding: 4px 10px; border-radius: 6px; border: none;
+            cursor: pointer; font-size: 11px; font-weight: 600;
+        }
+        .h-open { background: rgba(255,77,109,0.2); color: #ff85a1; }
+        .h-copy { background: rgba(0,200,100,0.2); color: #00c864; }
+        .h-del { background: rgba(255,0,0,0.15); color: #ff4444; }
+        .empty-history {
+            text-align: center; color: #555; padding: 20px; font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background Hearts -->
+<div class="bg-hearts" id="bg-hearts"></div>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>🌹 3D Gift Admin Panel</h1>
+        <p>নাম, ছবি, মেসেজ বসিয়ে → লিংক তৈরি করুন → পাঠিয়ে দিন</p>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+        <div class="step-dot active" id="sd1">1</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="sd2">2</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="sd3">3</div>
+        <div class="step-line"></div>
+        <div class="step-dot" id="sd4">✓</div>
+    </div>
+
+    <!-- Card 1: 3D Text -->
+    <div class="card">
+        <div class="card-title"><span>🎯</span> ধাপ ১: 3D টেক্সট সেটিংস</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>👤 নাম <span class="hint-text">(যাকে গিফট দিবেন)</span></label>
+                <input type="text" id="f_name" value="Mariya" placeholder="যেমন: Mariya, রাহেলা">
+            </div>
+            <div class="form-group">
+                <label>🎉 উপরের লেখা (Line 1)</label>
+                <input type="text" id="f_happy" value="Happy" placeholder="যেমন: Happy, শুভ">
+            </div>
+            <div class="form-group">
+                <label>🎂 মাঝের লেখা (Line 2)</label>
+                <input type="text" id="f_bday" value="17th Birthday" placeholder="যেমন: 17th Birthday">
+            </div>
+            <div class="form-group">
+                <label>☁️ ভাসমান মেঘ লেখা (EN)</label>
+                <input type="text" id="f_cloud" value="Happy Birthday Mariya" placeholder="3D floating text">
+            </div>
+            <div class="form-group">
+                <label>☁️ ভাসমান মেঘ লেখা (বাংলা)</label>
+                <input type="text" id="f_cloudbn" value="শুভ জন্মদিন Mariya" placeholder="বাংলা ভাসমান লেখা">
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Images -->
+    <div class="card">
+        <div class="card-title"><span>🖼️</span> ধাপ ২: ছবি সেটিংস</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>📸 প্রশ্নের স্ক্রিনের ছবি (Screen 3)</label>
+                <input type="text" id="f_img1" value="https://i.ibb.co/pvPVC5dV/image.png" placeholder="ছবির লিংক দিন (imgbb/imgur)">
+                <div class="img-preview-row">
+                    <img class="img-preview" id="prev1" src="https://i.ibb.co/pvPVC5dV/image.png">
+                    <span class="img-status" id="stat1">checking...</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>📸 সফলতার স্ক্রিনের ছবি (Screen 4)</label>
+                <input type="text" id="f_img2" value="https://i.ibb.co/ymwLH6r0/image.png" placeholder="ছবির লিংক দিন">
+                <div class="img-preview-row">
+                    <img class="img-preview" id="prev2" src="https://i.ibb.co/ymwLH6r0/image.png">
+                    <span class="img-status" id="stat2">checking...</span>
+                </div>
+            </div>
+        </div>
+        <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:10px 14px;margin-top:8px;">
+            <p style="font-size:12px;color:#ffd700;">💡 <b>ছবি আপলোড করতে:</b> <a href="https://imgbb.com" target="_blank" style="color:#ff85a1;">imgbb.com</a> বা <a href="https://imgur.com" target="_blank" style="color:#ff85a1;">imgur.com</a> এ ছবি আপলোড করে Direct Link কপি করে এখানে পেস্ট করুন।</p>
+        </div>
+    </div>
+
+    <!-- Card 3: Messages -->
+    <div class="card">
+        <div class="card-title"><span>💬</span> ধাপ ৩: মেসেজ সেটিংস</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>❓ প্রশ্ন (English)</label>
+                <textarea id="f_q">I want to have you in a halal way, do you agree...? 🌹</textarea>
+            </div>
+            <div class="form-group">
+                <label>❓ প্রশ্ন (বাংলা)</label>
+                <textarea id="f_qbn">আমি তোমাকে হালাল ভাবে পেতে চাই, তুমি কি রাজী...? 🌹</textarea>
+            </div>
+            <div class="form-group">
+                <label>✅ সফলতার মেসেজ (English)</label>
+                <textarea id="f_s">Then send me a message right now and let me know! ❤️</textarea>
+            </div>
+            <div class="form-group">
+                <label>✅ সফলতার মেসেজ (বাংলা)</label>
+                <textarea id="f_sbn">তাহলে তুমি আমাকে মেসেজ দিয়ে এখনই জানিয়ে দাও! ❤️</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="btn-row">
+        <button class="btn btn-primary" onclick="generateLink()">🔗 লিংক তৈরি করুন</button>
+        <button class="btn btn-secondary" onclick="previewOnly()">👁️ প্রিভিউ</button>
+        <button class="btn btn-reset" onclick="resetAll()">🔄 রিসেট</button>
+    </div>
+
+    <!-- Result -->
+    <div class="result-box" id="result-box">
+        <div class="result-title">✅ লিংক তৈরি হয়েছে!</div>
+        <div class="link-box">
+            <input type="text" id="gift-url" readonly>
+            <button class="copy-btn" id="copy-btn" onclick="copyLink()">📋 কপি</button>
+        </div>
+        <div class="action-btns">
+            <button class="action-btn btn-open" onclick="openLink()">🔗 লিংক খুলুন</button>
+            <button class="action-btn btn-wa" onclick="shareWA()">💚 WhatsApp</button>
+            <button class="action-btn btn-fb" onclick="shareFB()">💙 Facebook</button>
+        </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-section" id="preview-section">
+        <div class="preview-title">👁️ লাইভ প্রিভিউ:</div>
+        <iframe id="preview-frame" class="preview-frame"></iframe>
+    </div>
+
+    <!-- History -->
+    <div class="card history-card">
+        <div class="card-title"><span>📜</span> আগের তৈরি লিংক হিস্ট্রি</div>
+        <div id="history-list"></div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // Background hearts
+    const hearts = document.getElementById('bg-hearts');
+    for (let i = 0; i < 15; i++) {
+        const span = document.createElement('span');
+        span.innerHTML = ['❤️','💕','🌹','💖','✨'][Math.floor(Math.random()*5)];
+        span.style.left = Math.random()*100 + '%';
+        span.style.animationDelay = Math.random()*8 + 's';
+        span.style.animationDuration = (6+Math.random()*6) + 's';
+        hearts.appendChild(span);
+    }
+
+    // Image preview check
+    function checkImage(inputId, prevId, statId) {
+        const input = document.getElementById(inputId);
+        const prev = document.getElementById(prevId);
+        const stat = document.getElementById(statId);
+        input.addEventListener('input', () => {
+            const url = input.value.trim();
+            if (!url) { stat.textContent = '❌ খালি'; stat.className = 'img-status fail'; prev.src = ''; return; }
+            stat.textContent = '⏳ চেক হচ্ছে...'; stat.className = 'img-status';
+            prev.src = url;
+        });
+        prev.addEventListener('load', () => { stat.textContent = '✅ ছবি ওকে'; stat.className = 'img-status ok'; });
+        prev.addEventListener('error', () => { stat.textContent = '❌ ছবি লোড হচ্ছে না'; stat.className = 'img-status fail'; });
+        // Initial check
+        if (prev.complete && prev.naturalWidth > 0) { stat.textContent = '✅ ছবি ওকে'; stat.className = 'img-status ok'; }
+    }
+    checkImage('f_img1', 'prev1', 'stat1');
+    checkImage('f_img2', 'prev2', 'stat2');
+
+    // Auto-fill cloud text when name changes
+    document.getElementById('f_name').addEventListener('input', function() {
+        const n = this.value.trim();
+        document.getElementById('f_cloud').value = 'Happy Birthday ' + n;
+        document.getElementById('f_cloudbn').value = 'শুভ জন্মদিন ' + n;
+    });
+
+    function getBaseURL() {
+        return window.location.href.replace(/admin\.html.*$/, 'index.html');
+    }
+
+    function buildURL() {
+        const params = {
+            name: document.getElementById('f_name').value,
+            happy: document.getElementById('f_happy').value,
+            bday: document.getElementById('f_bday').value,
+            cloud: document.getElementById('f_cloud').value,
+            cloudbn: document.getElementById('f_cloudbn').value,
+            img1: document.getElementById('f_img1').value,
+            img2: document.getElementById('f_img2').value,
+            q: document.getElementById('f_q').value,
+            qbn: document.getElementById('f_qbn').value,
+            s: document.getElementById('f_s').value,
+            sbn: document.getElementById('f_sbn').value
+        };
+        const qs = Object.entries(params)
+            .filter(([k,v]) => v.trim() !== '')
+            .map(([k,v]) => k + '=' + encodeURIComponent(v))
+            .join('&');
+        return getBaseURL() + '?' + qs;
+    }
+
+    function generateLink() {
+        const name = document.getElementById('f_name').value.trim();
+        if (!name) { showToast('⚠️ নাম লিখুন!'); return; }
+        const url = buildURL();
+        document.getElementById('gift-url').value = url;
+        document.getElementById('result-box').style.display = 'block';
+        document.getElementById('result-box').scrollIntoView({ behavior: 'smooth' });
+
+        // Update steps
+        document.querySelectorAll('.step-dot').forEach(d => d.classList.remove('active'));
+        document.querySelectorAll('.step-dot').forEach(d => d.classList.add('done'));
+        document.getElementById('sd4').classList.add('active');
+
+        // Save to history
+        saveHistory(name, url);
+        showToast('✅ লিংক তৈরি হয়েছে!');
+    }
+
+    function previewOnly() {
+        const url = buildURL();
+        document.getElementById('preview-frame').src = url;
+        const sec = document.getElementById('preview-section');
+        sec.style.display = 'block';
+        sec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function copyLink() {
+        const input = document.getElementById('gift-url');
+        input.select(); input.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(input.value).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.classList.add('copied'); btn.textContent = '✅ কপি হয়েছে!';
+            setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋 কপি'; }, 2000);
+            showToast('📋 লিংক কপি হয়েছে!');
+        });
+    }
+
+    function openLink() {
+        window.open(document.getElementById('gift-url').value, '_blank');
+    }
+
+    function shareWA() {
+        const url = document.getElementById('gift-url').value;
+        const name = document.getElementById('f_name').value;
+        window.open('https://wa.me/?text=' + encodeURIComponent('🌹 ' + name + ' এর জন্য একটি স্পেশাল গিফট:\n' + url), '_blank');
+    }
+
+    function shareFB() {
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(document.getElementById('gift-url').value), '_blank');
+    }
+
+    function resetAll() {
+        document.getElementById('f_name').value = 'Mariya';
+        document.getElementById('f_happy').value = 'Happy';
+        document.getElementById('f_bday').value = '17th Birthday';
+        document.getElementById('f_cloud').value = 'Happy Birthday Mariya';
+        document.getElementById('f_cloudbn').value = 'শুভ জন্মদিন Mariya';
+        document.getElementById('f_img1').value = 'https://i.ibb.co/pvPVC5dV/image.png';
+        document.getElementById('f_img2').value = 'https://i.ibb.co/ymwLH6r0/image.png';
+        document.getElementById('f_q').value = 'I want to have you in a halal way, do you agree...? 🌹';
+        document.getElementById('f_qbn').value = 'আমি তোমাকে হালাল ভাবে পেতে চাই, তুমি কি রাজী...? 🌹';
+        document.getElementById('f_s').value = 'Then send me a message right now and let me know! ❤️';
+        document.getElementById('f_sbn').value = 'তাহলে তুমি আমাকে মেসেজ দিয়ে এখনই জানিয়ে দাও! ❤️';
+        document.getElementById('result-box').style.display = 'none';
+        document.getElementById('preview-section').style.display = 'none';
+        document.querySelectorAll('.step-dot').forEach(d => { d.classList.remove('done','active'); });
+        document.getElementById('sd1').classList.add('active');
+        showToast('🔄 রিসেট হয়েছে');
+    }
+
+    // Toast
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // History (localStorage)
+    function saveHistory(name, url) {
+        let hist = JSON.parse(localStorage.getItem('gift_history') || '[]');
+        hist.unshift({ name, url, date: new Date().toLocaleString('bn-BD') });
+        if (hist.length > 20) hist = hist.slice(0, 20);
+        localStorage.setItem('gift_history', JSON.stringify(hist));
+        renderHistory();
+    }
+    function renderHistory() {
+        const hist = JSON.parse(localStorage.getItem('gift_history') || '[]');
+        const el = document.getElementById('history-list');
+        if (!hist.length) { el.innerHTML = '<div class="empty-history">🕐 এখনো কোনো লিংক তৈরি হয়নি</div>'; return; }
+        el.innerHTML = hist.map((h, i) => `
+            <div class="history-item">
+                <div>
+                    <div class="history-name">🌹 ${h.name}</div>
+                    <div class="history-date">${h.date}</div>
+                </div>
+                <div class="history-actions">
+                    <button class="history-btn h-open" onclick="window.open('${h.url}','_blank')">খুলুন</button>
+                    <button class="history-btn h-copy" onclick="navigator.clipboard.writeText('${h.url}');showToast('কপি হয়েছে!')">কপি</button>
+                    <button class="history-btn h-del" onclick="deleteHistory(${i})">মুছুন</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    function deleteHistory(i) {
+        let hist = JSON.parse(localStorage.getItem('gift_history') || '[]');
+        hist.splice(i, 1);
+        localStorage.setItem('gift_history', JSON.stringify(hist));
+        renderHistory();
+        showToast('🗑️ মুছে ফেলা হয়েছে');
+    }
+    renderHistory();
+
+    // Step highlighting on scroll/input
+    ['f_name','f_happy','f_bday','f_cloud','f_cloudbn'].forEach(id => {
+        document.getElementById(id).addEventListener('focus', () => {
+            document.querySelectorAll('.step-dot').forEach(d=>d.classList.remove('active'));
+            document.getElementById('sd1').classList.add('active');
+        });
+    });
+    ['f_img1','f_img2'].forEach(id => {
+        document.getElementById(id).addEventListener('focus', () => {
+            document.querySelectorAll('.step-dot').forEach(d=>d.classList.remove('active'));
+            document.getElementById('sd2').classList.add('active');
+        });
+    });
+    ['f_q','f_qbn','f_s','f_sbn'].forEach(id => {
+        document.getElementById(id).addEventListener('focus', () => {
+            document.querySelectorAll('.step-dot').forEach(d=>d.classList.remove('active'));
+            document.getElementById('sd3').classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
